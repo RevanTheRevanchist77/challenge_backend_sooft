@@ -4,6 +4,8 @@ En este archivo coloco las dudas, suposiciones y decisiones tomadas durante el d
 
 Elegi JPA ya que para este challenge, es bastante mas sencillo de manejar a mi gusto para casos de prueba como este, originalmente utilice lombok pero tuve multiples inconvenientes con las dependencias y me vi obligado para no demorar mas en la resolucion a utilizar directamente getters y setters.
 
+Se agrego paginacion, una autenticacion basica y seguridad sencilla para los endpoints(PreAuthorize), a mejorar dentro de un contexto mas especifico o de mayor cantidad de datos, y con algun servicio de validacion externo.
+
 -------
 
 ## **1. Decisiones sobre la Arquitectura Hexagonal**
@@ -39,21 +41,16 @@ Elegi JPA ya que para este challenge, es bastante mas sencillo de manejar a mi g
 
 ## **3. Dudas surgidas durante el desarrollo**
 
-- **Duda 1: Validar el CUIT**
-  - ¿Debe validarse el formato del CUIT (por ejemplo, que tenga 11 diigitos)? En este caso, asumi que el CUIT debe tener 11 digitos y se agrego una validacion basica en el servicio.
 
-- **Duda 2: Manejo de fechas**
+- ** Manejo de fechas**
   - Debe manejarse la zona horaria para las fechas de transferencia y adhesion? Decidi utilizar `LocalDate` sin zona horaria, asumiendo que todas las fechas están en la misma zona horaria.
 
-- **Duda 3: Paginacion en los endpoints**
-  - ¿Deben los endpoints devolver todos los resultados o estar paginados? En este caso, decidi no implementar paginacion, pero deje abierta la posibilidad de agregarla en el futuro.
 
 -------
 
 ## **4. Posibles mejoras a futuro**
 
-- Implementar paginacion en los endpoints que devuelven listas de empresas o transferencias.
 - Agregar una autenticacion y autorización para proteger los endpoints.
-- Mejorar las validaciones de datos, como el formato del CUIT o que existan cuentas validas.
+- Mejorar las validaciones de datos, como que existan cuentas validas.
 
 

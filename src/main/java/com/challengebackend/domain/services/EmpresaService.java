@@ -1,11 +1,13 @@
 package com.challengebackend.domain.services;
 
 import java.time.LocalDate;
-import java.util.List;
 import com.challengebackend.domain.models.Empresa;
 import com.challengebackend.domain.repository.EmpresaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -19,13 +21,17 @@ public class EmpresaService {
         this.empresaRepository = empresaRepository;
     }
 
-    public List<Empresa> obtenerEmpresasAdheridasUltimoMes() {
+    public Page<Empresa> obtenerEmpresasAdheridasUltimoMes(Pageable pageable) {
         LocalDate fechaInicio = LocalDate.now().minusMonths(1);
-        return empresaRepository.findByFechaAdhesionAfter(fechaInicio);
+        return empresaRepository.findByFechaAdhesionAfter(fechaInicio, pageable);
     }
-
+    
+    
     public void adherirEmpresa(Empresa empresa) {
-        empresa.setFechaAdhesion(LocalDate.now());
-        empresaRepository.save(empresa);
+        try {
+            empresaRepository.save(empresa);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("CUIT duplicado");
+        }
     }
 }
